@@ -1,5 +1,5 @@
 <?php
-$inputs = explode(', ',file_get_contents('day1.txt'));
+$inputs = explode(', ',file_get_contents('day01.txt'));
 $x=0;
 $y=0;
 $d=0;

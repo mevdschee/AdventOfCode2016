@@ -1,5 +1,5 @@
 <?php
-$lines = file('day3.txt');
+$lines = file('day03.txt');
 for ($i=0;$i<count($lines);$i++) {
   $lines[$i] = preg_split('/\s+/',trim($lines[$i]));
 }

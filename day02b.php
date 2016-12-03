@@ -1,5 +1,5 @@
 <?php
-$inputs = file('day2.txt');
+$inputs = file('day02.txt');
 $keys = array(array(0,0,1,0,0),array(0,2,3,4,0),array(5,6,7,8,9),array(0,'A','B','C',0),array(0,0,'D',0,0));
 $x=0;
 $y=2;
