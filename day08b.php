@@ -15,7 +15,7 @@ foreach ($inputs as $input) {
   if (preg_match('/rotate row y=([0-9]+) by ([0-9]+)/',trim($input),$matches)) {
     $y = $matches[1];
     $r = $matches[2];
-    $field[$y]=substr($field[$y],50-$r).substr($field[$y],0,50-$r);
+    $field[$y]=substr($field[$y],-$r).substr($field[$y],0,-$r);
   }
   if (preg_match('/rotate column x=([0-9]+) by ([0-9]+)/',trim($input),$matches)) {
     $x = $matches[1];
@@ -31,4 +31,3 @@ foreach ($inputs as $input) {
   echo implode("\n",$field)."\n\n";
 }
 $count = array_count_values(str_split(implode('',$field)));
-var_dump($count['#']);
