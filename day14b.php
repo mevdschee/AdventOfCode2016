@@ -1,8 +1,8 @@
 <?php
-function cached_md5($salt,$str){
+function cached_md5($str){
   static $cache=array();
   if (isset($cache[$str])) return $cache[$str];
-  $hash = md5($salt.$str);
+  $hash = md5($str);
   for ($i=0;$i<2016;$i++) {
     $hash = md5($hash);
   }
@@ -13,10 +13,10 @@ function cached_md5($salt,$str){
 $salt = trim(file_get_contents('day14.txt'));
 $keys = array();
 for ($i=0;count($keys)<64;$i++) {
-  $hash = cached_md5($salt,$i);
+  $hash = cached_md5($salt.$i);
   if (!preg_match('/([a-z0-9])\1\1/',$hash,$matches)) continue;
   for ($j=$i+1;$j<$i+1001;$j++) {
-    $hash = cached_md5($salt,$j);
+    $hash = cached_md5($salt.$j);
     if (strpos($hash,str_repeat($matches[1],5))!==false) {
         $keys[]=$i;
         break;
