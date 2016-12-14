@@ -7,7 +7,7 @@ for ($i=0;count($keys)<64;$i++) {
   for ($j=$i+1;$j<$i+1001;$j++) {
     $hash = md5($salt.$j);
     if (strpos($hash,str_repeat($matches[1],5))!==false) {
-        if (!in_array($i,$keys)) $keys[]=$i;
+        $keys[]=$i;
         break;
     }
   }
