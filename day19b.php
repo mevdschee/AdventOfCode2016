@@ -2,7 +2,7 @@
 $elves = trim(file_get_contents('day19.txt'));
 $presents = array();
 for ($i=0;$i<$elves;$i++) {
-  $presents[$i]=$i+1;
+  $presents[$i]=array($i+1,1);
 }
 
 $left = $elves;
@@ -12,7 +12,8 @@ while ($left>1){
   for ($i=0;$i<floor($len/2);$i++) {
     $next = ($i+($len+$i)/2)%$len;
       
-    $presents[$next]=0;
+    $presents[$i][1]+=$presents[$next][1];
+    $presents[$next]=null;
     $left--;
     if ($left==1) {
       var_dump($presents[$i]);
