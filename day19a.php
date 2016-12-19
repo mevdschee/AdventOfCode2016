@@ -16,7 +16,7 @@ while ($left>1){
     $presents[$next]=null;
     $left--;
     if ($left==1) {
-      var_dump($presents[$i]);
+      var_dump($presents[$i][0]);
       break;
     } 
   }
