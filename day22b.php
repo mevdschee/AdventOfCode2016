@@ -52,4 +52,4 @@ function step($field) {
   return step($next)+1;
 }
 
-echo step($field)+5*(strlen($field[0])-2)+1;
+var_dump(step($field)+5*(strlen($field[0])-2)+1);
