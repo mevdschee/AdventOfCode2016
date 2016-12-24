@@ -1,7 +1,5 @@
 <?php
 $field = array_map('trim',file('day24.txt'));
-$width = strlen($field[0]);
-$height = count($field);
 $numbers = numbers($field);
 
 function numbers($field) {
