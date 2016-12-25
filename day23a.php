@@ -1,11 +1,11 @@
 <?php
-for ($i=6;$i<10;$i++) {
+
+function run($init) {
   $inputs = file('day23.txt');
-  $registers = array('a'=>$i,'b'=>0,'c'=>0,'d'=>0);
+  $registers = array('a'=>$init,'b'=>0,'c'=>0,'d'=>0);
   $pc = 0;
   do {
     $parts = explode(' ',trim($inputs[$pc]));
-    //var_dump($parts);
     switch($parts[0]) {
       case 'cpy':
         if (!is_numeric($parts[1])) $parts[1] = $registers[$parts[1]];
@@ -21,7 +21,6 @@ for ($i=6;$i<10;$i++) {
         break;
       case 'dec':
         if (isset($registers[$parts[1]])) $registers[$parts[1]]--;
-        if ($parts[1]=='b') echo json_encode($registers)."\n";
         break;
       case 'tgl':
         if (!is_numeric($parts[1])) $parts[1] = $registers[$parts[1]];
@@ -41,12 +40,7 @@ for ($i=6;$i<10;$i++) {
     }
     $pc++;
   } while ($pc<count($inputs));
-  echo $i.': '.$registers['a']."\n";
+  return $registers['a'];
 }
 
-function factorial($n) {
-  $product = array_product(range(1,++$n));
-  return $product / $n;
-}
-
-var_dump(factorial(12)+5964);
+var_dump(run(7));
