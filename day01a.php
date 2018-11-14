@@ -16,4 +16,4 @@ foreach($inputs as $input) {
     }
   }
 }
-var_dump(abs($x)+abs($y));
+echo abs($x)+abs($y);
