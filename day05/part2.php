@@ -1,5 +1,5 @@
 <?php
-$key = file_get_contents('input');
+$key = trim(file_get_contents('input'));
 $i = 0;
 $pwd = str_repeat('.', 8);
 do {
