@@ -24,7 +24,8 @@ function give($value, $to, $trans, $values)
     $min = min($values[$to], $value);
     $max = max($value, $values[$to]);
     if (array($min, $max) == array(17, 61)) {
-        echo $to;
+        list($bot,$output) = explode(' ',$to);
+        echo $output;
     }
     unset($values[$to]);
     $values = give($min, $trans[$to][0], $trans, $values);
