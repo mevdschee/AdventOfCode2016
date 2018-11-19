@@ -1,14 +1,28 @@
 <?php
 $generators = array('plg', 'prg', 'rug', 'stg', 'thg');
 $microchips = array('plm', 'prm', 'rum', 'stm', 'thm');
-// for $floors values, see: day11.txt
-$floors = array(
-    array('plg', 'stg', 'thg', 'thm'),
-    array('plm', 'stm'),
-    array('prg', 'prm', 'rug', 'rum'),
-    array(),
-);
+$floors = parse("input");
 $visited = array();
+
+function parse($file)
+{
+    $lines = file($file);
+    $floors = array();
+    foreach ($lines as $line) {
+        if (!$line) {
+            continue;
+        }
+        preg_match_all('/(promethium|plutonium|ruthenium|strontium|thulium)/', $line, $matches1);
+        preg_match_all('/(generator|microchip)/', $line, $matches2);
+        $floor = array();
+        for ($i = 0; $i < count($matches1[1]); $i++) {
+            $floor[] = substr($matches1[1][$i], 0, 2) . substr($matches2[1][$i], 0, 1);
+        }
+        sort($floor);
+        $floors[] = $floor;
+    }
+    return $floors;
+}
 
 function move($floors, $floor, $pos, $direction)
 {

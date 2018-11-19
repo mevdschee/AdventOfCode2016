@@ -37,7 +37,7 @@ function run($init)
                     $registers[$parts[1]]--;
                 }
                 if ($parts[1] == 'b') {
-                    echo json_encode($registers) . "\n";
+                    //echo json_encode($registers) . "\n";
                 }
                 break;
             case 'tgl':
@@ -69,14 +69,11 @@ function run($init)
     return $registers['a'];
 }
 
-for ($i = 6; $i < 10; $i++) {
-    echo $i . ': ' . run($i) . "\n";
-}
-
 function factorial($n)
 {
-    $product = array_product(range(1, ++$n));
-    return $product / $n;
+    return array_product(range(1, $n));
 }
 
-echo factorial(12) + 5964;
+$diff = run(7) - factorial(7);
+
+echo factorial(12) + $diff;
