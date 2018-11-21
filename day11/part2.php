@@ -1,14 +1,52 @@
 <?php
-$generators = array('dig', 'elg', 'plg', 'prg', 'rug', 'stg', 'thg');
-$microchips = array('dim', 'elm', 'plm', 'prm', 'rum', 'stm', 'thm');
-// for $floors values, see: day11.txt
-$floors = array(
-    array('dig', 'dim', 'elg', 'elm', 'plg', 'stg', 'thg', 'thm'),
-    array('plm', 'stm'),
-    array('prg', 'prm', 'rug', 'rum'),
-    array(),
-);
+list($generators, $microchips, $floors) = parse("input");
 $visited = array();
+
+function parse($file)
+{
+    $lines = file($file);
+
+    $floors = array();
+    foreach ($lines as $i => $line) {
+        $floors[$i] = array();
+    }
+
+    $generators = array();
+    foreach ($lines as $i => $line) {
+        if (preg_match_all('/([a-z][a-z])[a-z]* generator/', $line, $matches)) {
+            foreach ($matches[1] as $match) {
+                $generator = $match . "g";
+                $generators[] = $generator;
+                $floors[$i][] = $generator;
+            }
+        }
+    }
+    $generators = array_unique($generators);
+
+    $microchips = array();
+    foreach ($lines as $i => $line) {
+        if (preg_match_all('/([a-z][a-z])[a-z]*-compatible microchip/', $line, $matches)) {
+            foreach ($matches[1] as $match) {
+                $microchip = $match . "m";
+                $microchips[] = $microchip;
+                $floors[$i][] = $microchip;
+            }
+        }
+    }
+    $microchips = array_unique($microchips);
+
+    // add part 2 elements:
+    $floors[0][] = 'elg';
+    $floors[0][] = 'elm';
+    $floors[0][] = 'dig';
+    $floors[0][] = 'dim';
+
+    foreach ($floors as $i => $floor) {
+        sort($floors[$i]);
+    }
+
+    return array($generators, $microchips, $floors);
+}
 
 function move($floors, $floor, $pos, $direction)
 {
@@ -30,7 +68,7 @@ function move($floors, $floor, $pos, $direction)
 
 function valid($floors)
 {
-    global $generators, $microchips, $visited;
+    global $generators, $microchips;
     for ($f = 0; $f < count($floors); $f++) {
         foreach ($microchips as $i => $microchip) {
             if (in_array($microchip, $floors[$f]) && !in_array($generators[$i], $floors[$f])) {
