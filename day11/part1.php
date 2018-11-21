@@ -1,27 +1,45 @@
 <?php
-$generators = array('plg', 'prg', 'rug', 'stg', 'thg');
-$microchips = array('plm', 'prm', 'rum', 'stm', 'thm');
-$floors = parse("input");
+list($generators, $microchips, $floors) = parse("input");
 $visited = array();
 
 function parse($file)
 {
     $lines = file($file);
+
     $floors = array();
-    foreach ($lines as $line) {
-        if (!$line) {
-            continue;
-        }
-        preg_match_all('/(promethium|plutonium|ruthenium|strontium|thulium)/', $line, $matches1);
-        preg_match_all('/(generator|microchip)/', $line, $matches2);
-        $floor = array();
-        for ($i = 0; $i < count($matches1[1]); $i++) {
-            $floor[] = substr($matches1[1][$i], 0, 2) . substr($matches2[1][$i], 0, 1);
-        }
-        sort($floor);
-        $floors[] = $floor;
+    foreach ($lines as $i => $line) {
+        $floors[$i] = array();
     }
-    return $floors;
+
+    $generators = array();
+    foreach ($lines as $i => $line) {
+        if (preg_match_all('/([a-z][a-z])[a-z]* generator/', $line, $matches)) {
+            foreach ($matches[1] as $match) {
+                $generator = $match . "g";
+                $generators[] = $generator;
+                $floors[$i][] = $generator;
+            }
+        }
+    }
+    $generators = array_unique($generators);
+
+    $microchips = array();
+    foreach ($lines as $i => $line) {
+        if (preg_match_all('/([a-z][a-z])[a-z]*-compatible microchip/', $line, $matches)) {
+            foreach ($matches[1] as $match) {
+                $microchip = $match . "m";
+                $microchips[] = $microchip;
+                $floors[$i][] = $microchip;
+            }
+        }
+    }
+    $microchips = array_unique($microchips);
+
+    foreach ($floors as $i => $floor) {
+        sort($floors[$i]);
+    }
+
+    return array($generators, $microchips, $floors);
 }
 
 function move($floors, $floor, $pos, $direction)
@@ -44,7 +62,7 @@ function move($floors, $floor, $pos, $direction)
 
 function valid($floors)
 {
-    global $generators, $microchips, $visited;
+    global $generators, $microchips;
     for ($f = 0; $f < count($floors); $f++) {
         foreach ($microchips as $i => $microchip) {
             if (in_array($microchip, $floors[$f]) && !in_array($generators[$i], $floors[$f])) {
