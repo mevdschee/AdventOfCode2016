@@ -21,6 +21,8 @@ function parse($file)
             }
         }
     }
+    $generators[] = 'elg';
+    $generators[] = 'dig';
     $generators = array_unique($generators);
 
     $microchips = array();
@@ -33,14 +35,14 @@ function parse($file)
             }
         }
     }
+    $microchips[] = 'elm';
+    $microchips[] = 'dim';
     $microchips = array_unique($microchips);
 
-    // add part 2 elements:
     $floors[0][] = 'elg';
     $floors[0][] = 'elm';
     $floors[0][] = 'dig';
     $floors[0][] = 'dim';
-
     foreach ($floors as $i => $floor) {
         sort($floors[$i]);
     }
